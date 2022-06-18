@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface FileService {
     FileData createFile(List<Answer> answers, String path);
-    List<FileData> findAll(String path);
 }

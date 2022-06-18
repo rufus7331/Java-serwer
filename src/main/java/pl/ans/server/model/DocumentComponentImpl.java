@@ -7,7 +7,6 @@ import pl.ans.server.quiz.Answer;
 import pl.ans.server.quiz.BadRequestException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Arrays;
@@ -61,10 +60,8 @@ public class DocumentComponentImpl implements DocumentComponent {
             document.close();
             if(wynikTestu.equals("Negatywny"))  throw new BadRequestException();
 
-        } catch (DocumentException e) {
+        } catch (DocumentException | FileNotFoundException e) {
             LOGGER.error("i can't create document or file not exists");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
