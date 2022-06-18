@@ -8,21 +8,11 @@ public class FileData {
     private Long size;
     private ZonedDateTime creationDate;
 
-    public FileData(String fileName, Long size, ZonedDateTime creationDate) {
+    public FileData(String fileName) {
         this.fileName = fileName;
-        this.size = size;
-        this.creationDate = creationDate;
     }
 
     public String getFileName() {
         return fileName;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public String getCreationDate() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(creationDate);
     }
 }
