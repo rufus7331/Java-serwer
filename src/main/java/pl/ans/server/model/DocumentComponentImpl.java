@@ -7,6 +7,9 @@ import pl.ans.server.quiz.Answer;
 import pl.ans.server.quiz.BadRequestException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class DocumentComponentImpl implements DocumentComponent {
         try {
 
             Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileDestination));
             document.open();
             PdfPTable table = new PdfPTable(4);
             table.setWidths(new int[]{1, 1, 1, 1});
@@ -59,6 +63,8 @@ public class DocumentComponentImpl implements DocumentComponent {
 
         } catch (DocumentException e) {
             LOGGER.error("i can't create document or file not exists");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
