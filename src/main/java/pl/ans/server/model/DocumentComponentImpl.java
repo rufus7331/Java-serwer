@@ -7,8 +7,6 @@ import pl.ans.server.quiz.Answer;
 import pl.ans.server.quiz.BadRequestException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +24,6 @@ public class DocumentComponentImpl implements DocumentComponent {
         try {
 
             Document document = new Document();
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileDestination));
             document.open();
             PdfPTable table = new PdfPTable(4);
             table.setWidths(new int[]{1, 1, 1, 1});
@@ -57,11 +54,10 @@ public class DocumentComponentImpl implements DocumentComponent {
             table.addCell(createCell(String.valueOf(suma), 2, Element.ALIGN_LEFT));
 
             document.add(table);
-            setBackgroundAsGradient(document, writer);
             document.close();
             if(wynikTestu.equals("Negatywny"))  throw new BadRequestException();
 
-        } catch (DocumentException | FileNotFoundException e) {
+        } catch (DocumentException e) {
             LOGGER.error("i can't create document or file not exists");
         }
     }
@@ -79,16 +75,5 @@ public class DocumentComponentImpl implements DocumentComponent {
         cell.setPaddingLeft(3);
         cell.setPaddingRight(3);
         return cell;
-    }
-
-    private void setBackgroundAsGradient(Document document, PdfWriter writer) {
-        Rectangle pageSize = document.getPageSize();
-        PdfShading axial = PdfShading.simpleAxial(writer,
-                pageSize.getLeft(pageSize.getWidth()/10), pageSize.getBottom(),
-                pageSize.getRight(pageSize.getWidth()/10), pageSize.getBottom(),
-                new BaseColor(124,185,232),
-                new BaseColor(240,248,255), true, true);
-        PdfContentByte canvas = writer.getDirectContentUnder();
-        canvas.paintShading(axial);
     }
 }
